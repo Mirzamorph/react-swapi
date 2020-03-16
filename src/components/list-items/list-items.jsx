@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { bindActionCreators, compose } from "redux";
 import { connect } from 'react-redux';
 import { fetchItems, selectCurrentItem } from "../../actions/items-actions";
@@ -26,11 +26,12 @@ const ListItems = ({ data, currentItem, selectItem }) => {
 };
 
 const ListItemsContainer = (props) => {
-  const { getItems, selectItem } = props;
+  const { fetchItems, selectItem } = props;
   const { data, currentItem, loading, error } = props.items;
+  const getItems = useCallback(() => fetchItems(), [fetchItems]);
   useEffect(() => {
     getItems();
-  }, []);
+  }, [getItems]);
 
   if (loading) return <Spinner/>;
   if (error) return <ErrorIndicator message={error}/>;
@@ -41,7 +42,7 @@ const mapStateToProps = items => items;
 
 const mapDispatchToProps = (dispatch, { getData }) => {
   return bindActionCreators({
-    getItems: fetchItems(getData),
+    fetchItems: fetchItems(getData),
     selectItem: selectCurrentItem
   }, dispatch);
 };
