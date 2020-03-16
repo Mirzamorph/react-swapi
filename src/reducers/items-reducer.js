@@ -1,5 +1,6 @@
 const initialState = {
   data: [],
+  currentItem: null,
   loading: false,
   error: null
 };
@@ -24,6 +25,12 @@ const items = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload
+      };
+    case 'SELECT_CURRENT_ITEM':
+      const id = action.payload;
+      return {
+        ...state,
+        currentItem: state.data.find(item => item.id === id)
       };
     default:
       return state;

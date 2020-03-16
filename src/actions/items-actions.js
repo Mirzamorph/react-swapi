@@ -18,6 +18,13 @@ const fetchItemsError = (error) => {
   }
 };
 
+export const selectCurrentItem = (id) => {
+  return {
+    type: 'SELECT_CURRENT_ITEM',
+    payload: id
+  }
+};
+
 export const fetchItems = (getData) => () => (dispatch) => {
   dispatch(fetchItemsRequested());
   getData()
