@@ -6,7 +6,7 @@ import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
 
 const ListItems = ({ data, currentItem, selectItem }) => {
-  console.log(currentItem);
+
   const listItems = data.map(item => {
     let classNames = "list-group-item list-group-item-action";
     if (item === currentItem) classNames += " active";
