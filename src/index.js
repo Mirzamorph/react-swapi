@@ -1,12 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDom from 'react-dom';
+import { Provider } from 'react-redux';
+import store from "./store";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from "./components/app";
+import SwapiService from "./services/swapi-service";
+import { SwapiServiceProvider } from "./components/swapi-service-context";
+import ErrorBoundary from "./components/error-boundary";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const swapiService = new SwapiService();
+
+ReactDom.render(
+  <Provider store={store}>
+    <ErrorBoundary>
+      <SwapiServiceProvider value={swapiService}>
+        <App/>
+      </SwapiServiceProvider>
+    </ErrorBoundary>
+  </Provider>,
+  document.getElementById('root')
+);
