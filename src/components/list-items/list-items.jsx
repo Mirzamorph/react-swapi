@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { bindActionCreators, compose } from "redux";
 import { connect } from 'react-redux';
-import withSwapiService from "../hoc-helpers/with-swapi-service";
 import { fetchItems } from "../../actions/items-actions";
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
@@ -39,13 +38,12 @@ const mapStateToProps = ({items: { data, loading, error }}) => {
   }
 };
 
-const mapDispatchToProps = (dispatch, { swapiService }) => {
+const mapDispatchToProps = (dispatch, { getData }) => {
   return bindActionCreators({
-    fetchItems: fetchItems(swapiService)
+    fetchItems: fetchItems(getData)
   }, dispatch);
 };
 
 export default compose(
-  withSwapiService,
   connect(mapStateToProps, mapDispatchToProps)
 )(ListItemsContainer)

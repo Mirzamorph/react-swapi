@@ -18,9 +18,9 @@ const fetchItemsError = (error) => {
   }
 };
 
-export const fetchItems = (swapiService) => () => (dispatch) => {
+export const fetchItems = (getData) => () => (dispatch) => {
   dispatch(fetchItemsRequested());
-  swapiService.fetchData('people/')
-    .then(({ data }) => dispatch(fetchItemsLoaded(data.results)))
+  getData()
+    .then(data => dispatch(fetchItemsLoaded(data)))
     .catch(error => dispatch(fetchItemsError(error.toString())));
 };
