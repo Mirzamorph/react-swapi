@@ -1,17 +1,20 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { bindActionCreators, compose } from "redux";
 import { connect } from 'react-redux';
-import { fetchItems } from "../../actions/items-actions";
+import { fetchItems, selectCurrentItem } from "../../actions/items-actions";
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
 
-const ListItems = ({ data }) => {
-
+const ListItems = ({ data, currentItem, selectItem }) => {
+  console.log(currentItem);
   const listItems = data.map(item => {
+    let classNames = "list-group-item list-group-item-action";
+    if (item === currentItem) classNames += " active";
     return (
       <button type="button"
-              className="list-group-item list-group-item-action"
-              key={item.name}>{item.name}</button>
+              className={classNames}
+              onClick={() => selectItem(item.id)}
+              key={item.id}>{item.name}</button>
     )
   });
 
@@ -22,25 +25,24 @@ const ListItems = ({ data }) => {
   )
 };
 
-const ListItemsContainer = ({ data, loading, error, fetchItems}) => {
+const ListItemsContainer = (props) => {
+  const { getItems, selectItem } = props;
+  const { data, currentItem, loading, error } = props.items;
   useEffect(() => {
-    fetchItems();
+    getItems();
   }, []);
 
   if (loading) return <Spinner/>;
   if (error) return <ErrorIndicator message={error}/>;
-  return <ListItems data={data}/>;
+  return <ListItems data={data} selectItem={selectItem} currentItem={currentItem}/>;
 };
 
-const mapStateToProps = ({items: { data, loading, error }}) => {
-  return {
-    data, loading, error
-  }
-};
+const mapStateToProps = items => items;
 
 const mapDispatchToProps = (dispatch, { getData }) => {
   return bindActionCreators({
-    fetchItems: fetchItems(getData)
+    getItems: fetchItems(getData),
+    selectItem: selectCurrentItem
   }, dispatch);
 };
 
