@@ -2,10 +2,6 @@ import axios from 'axios';
 
 export default class SwapiService {
 
-  constructor() {
-    this._transformPerson = this._transformPerson.bind(this);
-  }
-
   _baseUrl = 'https://swapi.co/api/';
   _baseImgUrl = 'https://starwars-visualguide.com/assets/img/';
   apiData = {
@@ -16,10 +12,14 @@ export default class SwapiService {
     }
   };
 
-  _transformPerson(self, item) {
+  _catchId = (url) => {
     const pattern = /\/(\d+)\/$/;
-    const id = item.url.match(pattern)[1];
-    const img = self._baseImgUrl + self.apiData.people.imgUrl + id + '.jpg';
+    return url.match(pattern)[1];
+  };
+
+  _transformPerson(item) {
+    const id = this._catchId(item.url);
+    const img = this._baseImgUrl + this.apiData.people.imgUrl + id + '.jpg';
     return {
       id,
       name: item.name,
@@ -34,7 +34,7 @@ export default class SwapiService {
     const { url, method } = data;
     const fetchUrl = this._baseUrl + url;
     const result = await axios.get(fetchUrl);
-    return result.data.results.map((item) => method(this, item));
+    return result.data.results.map((item) => method.call(this, item));
   };
 
 }
