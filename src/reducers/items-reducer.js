@@ -10,6 +10,7 @@ const items = (state = initialState, action) => {
     case 'FETCH_ITEMS_REQUEST':
       return {
         ...state,
+        currentItem: null,
         loading: true,
         error: null
       };

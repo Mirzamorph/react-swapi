@@ -15,12 +15,13 @@ const DetailItem = ({ item, children}) => {
   if (item === null) return <p>Выберите элемент</p>;
 
   const { name } = item;
+  const img = item.img ? item.img : 'https://i.pinimg.com/originals/6a/46/8c/6a468ce7253b0e41e17b38358e9931dd.jpg';
   return (
     <div className="card mb-3">
       <div className="card-body">
         <h5 className="card-title">{ name }</h5>
       </div>
-      <img style={{width: '100%',}} src={item.img} alt={ name }/>
+      <img style={{width: '100%',}} src={img} alt={ name }/>
       <ul className="list-group list-group-flush">
         {
           React.Children.map(children, child => {
