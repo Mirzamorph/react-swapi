@@ -9,6 +9,16 @@ export default class SwapiService {
       url: 'people/',
       imgUrl: 'characters/',
       method: this._transformPerson
+    },
+    starships: {
+      url: 'starships/',
+      imgUrl: 'starships/',
+      method: this._transformStarship
+    },
+    planets: {
+      url: 'planets/',
+      imgUrl: 'planets/',
+      method: this._transformPlanet
     }
   };
 
@@ -27,6 +37,32 @@ export default class SwapiService {
       height: item.height,
       hairColor: item.hair_color,
       eyeColor: item.eye_color
+    }
+  };
+
+  _transformStarship(item) {
+    const id = this._catchId(item.url);
+    const img = this._baseImgUrl + this.apiData.starships.imgUrl + id + '.jpg';
+    return {
+      id,
+      name: item.name,
+      img,
+      model: item.model,
+      length: item.length,
+      passengers: item.passengers
+    }
+  };
+
+  _transformPlanet(item) {
+    const id = this._catchId(item.url);
+    const img = this._baseImgUrl + this.apiData.planets.imgUrl + id + '.jpg';
+    return {
+      id,
+      name: item.name,
+      img,
+      climate: item.climate,
+      diameter: item.diameter,
+      population: item.population
     }
   };
 
