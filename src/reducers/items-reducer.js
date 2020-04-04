@@ -2,7 +2,7 @@ const initialState = {
   data: [],
   currentItem: null,
   loading: false,
-  error: null
+  error: null,
 };
 
 const items = (state = initialState, action) => {
@@ -12,27 +12,28 @@ const items = (state = initialState, action) => {
         ...state,
         currentItem: null,
         loading: true,
-        error: null
+        error: null,
       };
     case 'FETCH_ITEMS_SUCCESS':
       return {
         ...state,
         data: action.payload,
         loading: false,
-        error: null
+        error: null,
       };
     case 'FETCH_ITEMS_FAILURE':
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       };
-    case 'SELECT_CURRENT_ITEM':
+    case 'SELECT_CURRENT_ITEM': {
       const id = action.payload;
       return {
         ...state,
-        currentItem: state.data.find(item => item.id === id)
+        currentItem: state.data.find((item) => item.id === id),
       };
+    }
     default:
       return state;
   }
