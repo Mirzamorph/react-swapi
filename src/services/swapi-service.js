@@ -1,36 +1,37 @@
+/* eslint-disable no-underscore-dangle */
 import axios from 'axios';
 
 export default class SwapiService {
-  constructor() {
-    this.baseUrl = 'https://swapi.co/api/';
-    this.baseImgUrl = 'https://starwars-visualguide.com/assets/img/';
-    this.apiData = {
-      people: {
-        url: 'people/',
-        imgUrl: 'characters/',
-        method: this.transformPerson,
-      },
-      starships: {
-        url: 'starships/',
-        imgUrl: 'starships/',
-        method: this.transformStarship,
-      },
-      planets: {
-        url: 'planets/',
-        imgUrl: 'planets/',
-        method: this.transformPlanet,
-      },
-    };
-  }
+  _baseUrl = 'https://swapi.co/api/';
 
-  static catchId(url) {
+  _baseImgUrl = 'https://starwars-visualguide.com/assets/img/';
+
+  apiData = {
+    people: {
+      url: 'people/',
+      imgUrl: 'characters/',
+      method: this._transformPerson,
+    },
+    starships: {
+      url: 'starships/',
+      imgUrl: 'starships/',
+      method: this._transformStarship,
+    },
+    planets: {
+      url: 'planets/',
+      imgUrl: 'planets/',
+      method: this._transformPlanet,
+    },
+  };
+
+  _catchId = (url) => {
     const pattern = /\/(\d+)\/$/;
     return url.match(pattern)[1];
-  }
+  };
 
-  transformPerson(item) {
-    const id = this.catchId(item.url);
-    const img = `${this.baseImgUrl + this.apiData.people.imgUrl + id}.jpg`;
+  _transformPerson(item) {
+    const id = this._catchId(item.url);
+    const img = `${this._baseImgUrl + this.apiData.people.imgUrl + id}.jpg`;
     return {
       id,
       name: item.name,
@@ -41,9 +42,9 @@ export default class SwapiService {
     };
   }
 
-  transformStarship(item) {
-    const id = this.catchId(item.url);
-    const img = `${this.baseImgUrl + this.apiData.starships.imgUrl + id}.jpg`;
+  _transformStarship(item) {
+    const id = this._catchId(item.url);
+    const img = `${this._baseImgUrl + this.apiData.starships.imgUrl + id}.jpg`;
     return {
       id,
       name: item.name,
@@ -54,9 +55,9 @@ export default class SwapiService {
     };
   }
 
-  transformPlanet(item) {
-    const id = this.catchId(item.url);
-    const img = `${this.baseImgUrl + this.apiData.planets.imgUrl + id}.jpg`;
+  _transformPlanet(item) {
+    const id = this._catchId(item.url);
+    const img = `${this._baseImgUrl + this.apiData.planets.imgUrl + id}.jpg`;
     return {
       id,
       name: item.name,
@@ -67,13 +68,10 @@ export default class SwapiService {
     };
   }
 
-  async fetchData(data) {
-    const {
-      url,
-      method,
-    } = data;
-    const fetchUrl = this.baseUrl + url;
+  fetchData = async (data) => {
+    const { url, method } = data;
+    const fetchUrl = this._baseUrl + url;
     const result = await axios.get(fetchUrl);
     return result.data.results.map((item) => method.call(this, item));
-  }
+  };
 }
