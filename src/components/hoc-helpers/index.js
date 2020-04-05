@@ -1,5 +1,3 @@
-import withSwapiService from "./with-swapi-service";
+import withSwapiService from './with-swapi-service';
 
-export {
-  withSwapiService
-}
+export { withSwapiService };
