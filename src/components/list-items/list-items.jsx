@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
-import { bindActionCreators, compose } from 'redux';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems, selectCurrentItem } from '../../actions/items-actions';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
@@ -24,14 +23,15 @@ const ListItems = ({ data, currentItem, selectItem }) => {
   return <div className="list-group">{listItems}</div>;
 };
 
-const ListItemsContainer = (props) => {
-  // eslint-disable-next-line no-shadow
-  const { fetchItems, selectItem, items } = props;
+const ListItemsContainer = ({ getData }) => {
+  const items = useSelector((state) => state.items);
+  const dispatch = useDispatch();
+  const selectItem = (id) => dispatch(selectCurrentItem(id));
+
   const { data, currentItem, loading, error } = items;
-  const getItems = useCallback(() => fetchItems(), [fetchItems]);
   useEffect(() => {
-    getItems();
-  }, [getItems]);
+    fetchItems(getData, dispatch);
+  }, [dispatch, getData]);
 
   if (loading) return <Spinner />;
   if (error) return <ErrorIndicator message={error} />;
@@ -40,17 +40,4 @@ const ListItemsContainer = (props) => {
   );
 };
 
-const mapStateToProps = (items) => items;
-
-const mapDispatchToProps = (dispatch, { getData }) =>
-  bindActionCreators(
-    {
-      fetchItems: fetchItems(getData),
-      selectItem: selectCurrentItem,
-    },
-    dispatch,
-  );
-
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  ListItemsContainer,
-);
+export default ListItemsContainer;
