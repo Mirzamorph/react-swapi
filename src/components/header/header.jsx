@@ -8,34 +8,32 @@ const Header = () => (
         Star Wars Api
       </Link>
 
-      <div>
-        <ul className="navbar-nav mr-auto">
-          <NavLink
-            to="/"
-            className="nav-item nav-link"
-            activeClassName="active"
-            exact
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/starships"
-            className="nav-item nav-link"
-            activeClassName="active"
-            exact
-          >
-            Starships
-          </NavLink>
-          <NavLink
-            to="/planets"
-            className="nav-item nav-link"
-            activeClassName="active"
-            exact
-          >
-            Planets
-          </NavLink>
-        </ul>
-      </div>
+      <ul className="navbar-nav mr-auto">
+        <NavLink
+          to="/"
+          className="nav-item nav-link"
+          activeClassName="active"
+          exact
+        >
+          Home
+        </NavLink>
+        <NavLink
+          to="/starships"
+          className="nav-item nav-link"
+          activeClassName="active"
+          exact
+        >
+          Starships
+        </NavLink>
+        <NavLink
+          to="/planets"
+          className="nav-item nav-link"
+          activeClassName="active"
+          exact
+        >
+          Planets
+        </NavLink>
+      </ul>
     </div>
   </nav>
 );
