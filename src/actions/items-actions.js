@@ -17,7 +17,7 @@ export const selectCurrentItem = (id) => ({
   payload: id,
 });
 
-export const fetchItems = (getData) => () => (dispatch) => {
+export const fetchItems = (getData, dispatch) => {
   dispatch(fetchItemsRequested());
   getData()
     .then((data) => dispatch(fetchItemsLoaded(data)))

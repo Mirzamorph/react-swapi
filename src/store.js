@@ -3,9 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './reducers';
 
-const arg = composeWithDevTools(
-  applyMiddleware(thunkMiddleware),
-);
+const arg = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
 const store = createStore(rootReducer, arg);
 
