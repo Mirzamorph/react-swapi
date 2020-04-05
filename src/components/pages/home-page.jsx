@@ -7,7 +7,6 @@ import { SwapiServiceContext } from '../swapi-service-context';
 
 const HomePage = () => {
   const swapiService = useContext(SwapiServiceContext);
-  console.log(swapiService);
   const { fetchData, apiData } = swapiService;
   const personDetail = (
     <DetailItem>
