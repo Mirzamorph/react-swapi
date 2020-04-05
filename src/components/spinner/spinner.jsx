@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Spinner = () => {
   return (
@@ -9,7 +9,7 @@ const Spinner = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Spinner;
